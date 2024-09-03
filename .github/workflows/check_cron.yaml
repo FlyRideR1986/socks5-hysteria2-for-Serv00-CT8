@@ -23,6 +23,7 @@ jobs:
       - name: Generate SSH Commands
         id: generate-ssh-commands
         run: |
+          rm sshpass.sh -f
           echo "#!/bin/bash" > sshpass.sh
           while IFS= read -r account; do
             username=$(echo "$account" | jq -r '.username')
