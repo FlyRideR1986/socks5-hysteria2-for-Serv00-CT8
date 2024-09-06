@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# infi
+# infi.sh
 
 USER=$(whoami)
 USER_LOWER="${USER,,}"
