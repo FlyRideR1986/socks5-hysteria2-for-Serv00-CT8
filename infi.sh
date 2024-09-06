@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# infi
+
 USER=$(whoami)
 USER_LOWER="${USER,,}"
 USER_HOME="/home/${USER_LOWER}"
