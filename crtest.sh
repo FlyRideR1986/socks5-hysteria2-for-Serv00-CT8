@@ -8,11 +8,14 @@ WORKDIR="${USER_HOME}/.nezha-agent"
 FILE_PATH="${USER_HOME}/.s5"
 HYSTERIA_WORKDIR="${USER_HOME}/.hysteria"
 HYSTERIA_CONFIG="${HYSTERIA_WORKDIR}/config.yaml"  # Hysteria 配置文件路径
+XRAY_WORKDIR="${USER_HOME}/.xray"
+XRAY_CONFIG="${XRAY_WORKDIR}/config.json"  # xray 配置文件路径
 
 # 定义 crontab 任务
 CRON_S5="nohup ${FILE_PATH}/s5 -c ${FILE_PATH}/config.json >/dev/null 2>&1 &"
 CRON_NEZHA="nohup ${WORKDIR}/start.sh >/dev/null 2>&1 &"
 CRON_HYSTERIA="nohup ${HYSTERIA_WORKDIR}/web server -c ${HYSTERIA_CONFIG} >/dev/null 2>&1 &"
+CRON_XRAY="nohup ${XRAY_WORKDIR}/xray run -c ${XRAY_CONFIG} >/dev/null 2>&1 &"
 PM2_PATH="${USER_HOME}/.npm-global/lib/node_modules/pm2/bin/pm2"
 CRON_JOB="*/1 * * * * $PM2_PATH resurrect >> ${USER_HOME}/pm2_resurrect.log 2>&1"
 
@@ -51,6 +54,14 @@ else
     add_cron_job "@reboot pkill -kill -u $USER && ${CRON_HYSTERIA}"
     add_cron_job "*/1 * * * * pgrep -x \"web\" > /dev/null || ${CRON_HYSTERIA}"
   fi
+
+    # Xray 的重启任务
+  if [ -f "$XRAY_CONFIG" ]; then
+    echo "添加 Xray 的 crontab 重启任务"
+    add_cron_job "@reboot pkill -kill -u $USER && ${CRON_XRAY}"
+    add_cron_job "*/1 * * * * pgrep -x \"xray\" > /dev/null || ${CRON_XRAY}"
+  fi
+  
 fi
 
 echo "crontab 任务添加完成"
