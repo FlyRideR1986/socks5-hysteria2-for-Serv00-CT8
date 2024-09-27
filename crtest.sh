@@ -48,12 +48,12 @@ else
     add_cron_job "*/1 * * * * pgrep -x \"s5\" > /dev/null || ${CRON_S5}"
   fi
 
-  # Hysteria 的重启任务
-  if [ -f "$HYSTERIA_CONFIG" ]; then
-    echo "添加 Hysteria 的 crontab 重启任务"
-    add_cron_job "@reboot pkill -kill -u $USER && ${CRON_HYSTERIA}"
-    add_cron_job "*/1 * * * * pgrep -x \"web\" > /dev/null || ${CRON_HYSTERIA}"
-  fi
+  # # Hysteria 的重启任务
+  # if [ -f "$HYSTERIA_CONFIG" ]; then
+  #   echo "添加 Hysteria 的 crontab 重启任务"
+  #   add_cron_job "@reboot pkill -kill -u $USER && ${CRON_HYSTERIA}"
+  #   add_cron_job "*/1 * * * * pgrep -x \"web\" > /dev/null || ${CRON_HYSTERIA}"
+  # fi
 
   ## Xray 的重启任务
   #if [ -f "$XRAY_CONFIG" ]; then
