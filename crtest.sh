@@ -55,12 +55,12 @@ else
     add_cron_job "*/1 * * * * pgrep -x \"web\" > /dev/null || ${CRON_HYSTERIA}"
   fi
 
-    # Xray 的重启任务
-  if [ -f "$XRAY_CONFIG" ]; then
-    echo "添加 Xray 的 crontab 重启任务"
-    add_cron_job "@reboot pkill -kill -u $USER && ${CRON_XRAY}"
-    add_cron_job "*/1 * * * * pgrep -x \"xray\" > /dev/null || ${CRON_XRAY}"
-  fi
+  ## Xray 的重启任务
+  #if [ -f "$XRAY_CONFIG" ]; then
+  #  echo "添加 Xray 的 crontab 重启任务"
+  #  add_cron_job "@reboot pkill -kill -u $USER && ${CRON_XRAY}"
+  #  add_cron_job "*/1 * * * * pgrep -x \"xray\" > /dev/null || ${CRON_XRAY}"
+  #fi
   
 fi
 
